@@ -35,20 +35,21 @@
 	<script type="text/javascript" >
 
 		const p = new Promise((resolve,reject)=>{
+			//模拟一个异步任务
 			/* setTimeout(()=>{
 				resolve('我是成功的数据')
 			},2000) */
+
+			//真正开启一个异步任务
 			const xhr = new XMLHttpRequest()
 			xhr.onreadystatechange = ()=>{
 				if(xhr.readyState === 4){
-					if(xhr.status === 200){
-						resolve(xhr.response)
-					}else{
-						reject('请求出错')
-					}
+					//readyState为4代表接收完毕，接收的可能是：服务器返回的成功数据、服务器返回的错误
+					if(xhr.status === 200) resolve(xhr.response)
+					else reject('请求出错')
 				}
 			}
-			xhr.open('GET','https://api.apiopen.top/getJoke2')
+			xhr.open('GET','https://api.apiopen.top/getJoke')
 			xhr.responseType = 'json'
 			xhr.send()
 		})
