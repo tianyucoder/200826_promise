@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Promise基本使用</title>
+</head>
+<body>
+	<!-- 
+		1. 重要语法
+						new Promise(executor)构造函数
+						Promise.prototype.then方法
+
+		2. 基本编码流程
+					1.创建Promise的实例对象(pending状态), 传入executor函数
+					2.在executor中启动异步任务（定时器、ajax请求）
+					3.根据异步任务的结果，做不同处理：
+								3.1 如果异步任务成功了：
+												我们调用resolve(value), 让Promise实例对象状态变为成功(fulfilled),同时指定成功的value
+								3.2 如果异步任务失败了：
+												我们调用reject(reason), 让Promise实例对象状态变为失败(rejected),同时指定失败的reason
+					4.通过then方法为Promise的实例指定成功、失败的回调函数，来获取成功的value、失败的reason
+								注意：then方法所指定的：成功的回调、失败的回调，都是异步的回调。
+
+		3. 关于状态的注意点：
+					1.三个状态:
+								pending: 未确定的------初始状态
+								fulfilled: 成功的------调用resolve()后的状态
+								rejected: 失败的-------调用reject()后的状态
+					2.两种状态改变
+								pending ==> fulfilled
+								pending ==> rejected
+					3.状态只能改变一次！！
+					4.一个promise指定多个成功/失败回调函数, 都会调用吗?
+	 -->
+	<script type="text/javascript" >
+
+		const p = new Promise((resolve,reject)=>{
+			/* setTimeout(()=>{
+				resolve('我是成功的数据')
+			},2000) */
+			const xhr = new XMLHttpRequest()
+			xhr.onreadystatechange = ()=>{
+				if(xhr.readyState === 4){
+					if(xhr.status === 200){
+						resolve(xhr.response)
+					}else{
+						reject('请求出错')
+					}
+				}
+			}
+			xhr.open('GET','https://api.apiopen.top/getJoke2')
+			xhr.responseType = 'json'
+			xhr.send()
+		})
+		
+		p.then(
+			(value)=>{console.log('成功了1',value);}, //成功的回调-异步
+			(reason)=>{console.log('失败了1',reason);} //失败的回调-异步
+		)
+		console.log('@');
+
+	</script>
+</body>
+</html>
