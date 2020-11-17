@@ -41,12 +41,28 @@
 
 	//如何捕获一个错误
 	//try中放可能出现错误的代码，一旦出现错误立即停止try中代码的执行，调用catch，并携带错误信息
-	try {
+	/* try {
 		console.log(1);
 		console.log(a);
 		console.log(2);
 	} catch (error) {
 		console.log('代码执行出错了,错误的原因是：',error);
+	} */
+
+	//如何抛出一个错误
+	function demo(){
+		const date = Date.now()
+		if(date % 2 === 0){
+			console.log('偶数，可以正常工作');
+		}else{
+			throw new Error('奇数，不可以工作！')
+		}
+	}
+	try {
+		demo()
+	} catch (error) {
+		debugger;
+		console.log('@',error);
 	}
 </script>
 </body>
