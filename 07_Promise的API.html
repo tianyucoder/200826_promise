@@ -22,10 +22,11 @@
           说明: catch方法是then方法的语法糖, 相当于: then(undefined, onRejected)
 
     4. Promise.resolve方法: Promise.resolve(value)
-          说明: 用于快速返回一个状态为fulfilled的Promise实例对象
+					说明: 用于快速返回一个状态为fulfilled或rejected的Promise实例对象
+					备注：value的值可能是：(1)非Promise值  (2)Promise值
 
 		5. Promise.reject方法: Promise.reject方法(reason)
-          说明: 用于快速返回一个状态为rejected的Promise实例对象
+          说明: 用于快速返回一个状态必为rejected的Promise实例对象
 		
     6. Promise.all方法: Promise.all(promiseArr)
           promiseArr: 包含n个Promise实例的数组
@@ -52,21 +53,78 @@
 	//#endregion
 
 	//Promise.prototype.catch方法
-	const p = new Promise((resolve,reject)=>{
+	//#region 
+	/* const p = new Promise((resolve,reject)=>{
 		setTimeout(()=>{
-			resolve(100)
+			reject(100)
 		},1000)
 	})
-
 	p.then(
-		undefined,
+		value => {console.log('成功了1',reason);},
 		reason => {console.log('失败了1',reason);}
 	)
-
 	p.catch(
 		reason => {console.log('失败了2',reason);}
-	)
+	) */
+	//#endregion
 
+	//Promise.resolve
+	//#region 
+	/* const p0 = Promise.reject(-100)
+	const p = Promise.resolve(p0)
+	p.then(
+		value => {console.log('成功了',value);},
+		reason => {console.log('失败了',reason);}
+	) */
+	//#endregion
+	
+	//Promise.reject
+	//#region 
+	/* const p0 = Promise.resolve(100)
+	const p = Promise.reject(p0)
+	p.then(
+		value => {console.log('成功了',value);},
+		reason => {console.log('失败了',reason);}
+	) */
+	//#endregion
+	
+	//Promise.all
+	//#region 
+	/* const p1 = Promise.resolve('a')
+	const p2 = new Promise((resolve,reject)=>{
+		setTimeout(()=>{
+			reject('b')
+		},500)
+	})
+	const p3 = new Promise((resolve,reject)=>{
+		setTimeout(()=>{
+			reject('c')
+		},2000)
+	})
+	const x = Promise.all([p1,p2,p3])
+	x.then(
+		value => {console.log('成功了',value);},
+		reason => {console.log('失败了',reason);}
+	) */
+	//#endregion
+	
+	//Promise.race
+	/* const p1 = Promise.reject('a')
+	const p2 = new Promise((resolve,reject)=>{
+		setTimeout(()=>{
+			resolve('b')
+		},500)
+	})
+	const p3 = new Promise((resolve,reject)=>{
+		setTimeout(()=>{
+			reject('c')
+		},2000)
+	})
+	const x = !Promise.race([p3,p1,p2])
+	x.then(
+		value => {console.log('成功了',value);},
+		reason => {console.log('失败了',reason);}
+	) */
 	</script>
 </body>
 </html>
