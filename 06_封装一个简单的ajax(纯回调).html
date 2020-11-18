@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>封装一个简单的ajax(纯回调)</title>
+</head>
+<body>
+<script type="text/javascript">
+
+  /*
+		定义一个sendAjax函数，对xhr的get请求进行封装：
+				1.该函数接收4个参数：url(请求地址)、data(参数对象)、success(成功的回调)、error(失败的回调)
+  */
+	function sendAjax(url,data,success,error){
+		//实例xhr
+		const xhr = new XMLHttpRequest()
+		//绑定监听
+		xhr.onreadystatechange = ()=>{
+			if(xhr.readyState === 4){
+				if(xhr.status >= 200 && xhr.status < 300) success(xhr.response);
+				else error('请求出了点问题');
+			}
+		}
+		//整理参数
+		let str = ''
+		for (let key in data){
+			str += `${key}=${data[key]}&`
+		}
+		str = str.slice(0,-1)
+		xhr.open('GET',url+'?'+str)
+		xhr.responseType = 'json'
+		xhr.send()
+	}
+
+	sendAjax(
+		'https://api.apiopen.top/getJoke',
+		{page:1,count:2,type:'video'},
+		(response)=>{console.log('成功了',response);}, //成功的回调
+		(err)=>{console.log('失败了',err);}, //失败的回调
+	)
+
+
+
+</script>
+</body>
+</html>

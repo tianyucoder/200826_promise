@@ -36,7 +36,7 @@
 				xhr.send()
 			})
 	}
-
+	
 	const x = sendAjax('https://api.apiopen.top/getJoke',{page:1,count:2,type:'video'})
 	x.then(
 		(data)=>{console.log('成功了',data);},
