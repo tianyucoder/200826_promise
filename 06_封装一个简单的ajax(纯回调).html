@@ -35,8 +35,26 @@
 	sendAjax(
 		'https://api.apiopen.top/getJoke',
 		{page:1,count:2,type:'video'},
-		(response)=>{console.log('成功了',response);}, //成功的回调
-		(err)=>{console.log('失败了',err);}, //失败的回调
+		response =>{
+			console.log('第1次成功了',response);
+			sendAjax(
+				'https://api.apiopen.top/getJoke',
+				{page:1,count:2,type:'video'},
+				response =>{
+					console.log('第2次成功了',response);
+					sendAjax(
+						'https://api.apiopen.top/getJoke',
+						{page:1,count:2,type:'video'},
+						response =>{
+							console.log('第3次成功了',response);
+						}, 
+						err =>{console.log('第3次失败了',err);}
+					)
+				}, 
+				err =>{console.log('第2次失败了',err);}
+			)
+		}, 
+		err =>{console.log('第1次失败了',err);}
 	)
 
 
