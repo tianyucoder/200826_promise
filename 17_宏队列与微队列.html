@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>宏队列与微队列</title>
+</head>
+<body>
+  <script>
+
+		/* 
+			宏队列:[宏任务1，宏任务2.....]
+			微队列:[微任务1，微任务2.....]
+			规则：每次要执行宏队列里的一个任务之前，先看微队列里是否有待执行的微任务
+						1.如果有，先执行微任务
+						2.如果没有，按照宏队列里任务的顺序，依次执行
+		*/
+		  //代码一
+      setTimeout(()=>{
+        console.log('timeout')
+      },0)
+
+      Promise.resolve(1).then(
+        value => console.log('成功1',value)
+      )
+      Promise.resolve(2).then(
+        value => console.log('成功2',value)
+      )
+      console.log('主线程')
+
+
+      //代码二
+      /* setTimeout(()=>{
+        console.log('timeout1')
+      })
+      setTimeout(()=>{
+        console.log('timeout2')
+      })
+
+      Promise.resolve(1).then(
+        value => console.log('成功1',value)
+      )
+      Promise.resolve(2).then(
+        value => console.log('失败2',value)
+      ) */
+
+      //代码三
+      /* setTimeout(()=>{
+        console.log('timeout1')
+        Promise.resolve(5).then(
+          value => console.log('成功了5')
+        )
+      })
+      setTimeout(()=>{
+        console.log('timeout2')
+      })
+
+      Promise.resolve(3).then(
+        value => console.log('成功了3')
+      )
+      Promise.resolve(4).then(
+        value => console.log('失败了4')
+      ) */
+
+  </script>
+</body>
+</html>
