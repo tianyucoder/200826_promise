@@ -17,7 +17,7 @@
 						2.如果没有，按照宏队列里任务的顺序，依次执行
 		*/
 		  //代码一
-      setTimeout(()=>{
+      /* setTimeout(()=>{
         console.log('timeout')
       },0)
 
@@ -27,7 +27,7 @@
       Promise.resolve(2).then(
         value => console.log('成功2',value)
       )
-      console.log('主线程')
+      console.log('主线程') */
 
 
       //代码二
@@ -42,11 +42,11 @@
         value => console.log('成功1',value)
       )
       Promise.resolve(2).then(
-        value => console.log('失败2',value)
+        value => console.log('成功2',value)
       ) */
 
       //代码三
-      /* setTimeout(()=>{
+      setTimeout(()=>{
         console.log('timeout1')
         Promise.resolve(5).then(
           value => console.log('成功了5')
@@ -60,8 +60,8 @@
         value => console.log('成功了3')
       )
       Promise.resolve(4).then(
-        value => console.log('失败了4')
-      ) */
+        value => console.log('成功了4')
+      )
 
   </script>
 </body>
